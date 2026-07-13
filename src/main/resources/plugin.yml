@@ -1,0 +1,22 @@
+main: org.xpfarm.worldcrud.WorldCRUDPlugin
+name: WorldCRUD
+version: '${project.version}'
+api-version: '1.21'
+description: A powerful world management utility plugin for Minecraft servers
+author: Carmelo Santana
+website: https://xp.farm
+
+permissions:
+  worldcrud.admin:
+    description: Full access to all WorldCRUD commands
+    default: op
+  worldcrud.teleport:
+    description: Allows teleporting to registered worlds
+    default: op
+
+commands:
+  worldcrud:
+    description: WorldCRUD main command
+    usage: /worldcrud <subcommand>
+    aliases: [wcrud, wc]
+    permission: worldcrud.admin

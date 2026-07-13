@@ -1,0 +1,28 @@
+default-world-type: NORMAL
+debug-mode: false
+allowed-types:
+  - NORMAL
+  - FLAT
+  - ISLAND
+  - VOID
+
+# Sticky Logout Configuration
+sticky-logout:
+  # Global sticky logout setting
+  enabled: true
+  
+  # Per-world sticky logout settings
+  # If not specified, worlds default to enabled (if global is enabled)
+  worlds:
+    # Example world-specific settings:
+    # world:
+    #   enabled: true
+    # world_nether:
+    #   enabled: false
+    # creative_world:
+    #   enabled: false
+    
+    # You can add specific world configurations here
+    # Format:
+    # worldname:
+    #   enabled: true/false
