@@ -164,4 +164,4 @@ For support, bug reports, or feature requests:
 
 ## License
 
-This plugin is part of the XP Farm plugin collection and follows the project's licensing terms.
+This project is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE).
