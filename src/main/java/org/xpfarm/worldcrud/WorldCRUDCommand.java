@@ -756,7 +756,7 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(Component.text("Author: ", NamedTextColor.GRAY)
                 .append(Component.text("Carmelo Santana", NamedTextColor.WHITE)));
         sender.sendMessage(Component.text("Website: ", NamedTextColor.GRAY)
-                .append(Component.text("https://xp.farm", NamedTextColor.AQUA)));
+                .append(Component.text("https://xpfarm.org", NamedTextColor.AQUA)));
         return true;
     }
     

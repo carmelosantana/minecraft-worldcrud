@@ -4,7 +4,7 @@ version: '${project.version}'
 api-version: '1.21'
 description: A powerful world management utility plugin for Minecraft servers
 author: Carmelo Santana
-website: https://xp.farm
+website: https://xpfarm.org
 
 permissions:
   worldcrud.admin:

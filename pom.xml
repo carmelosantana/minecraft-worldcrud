@@ -19,7 +19,7 @@
 
     <name>WorldCRUD</name>
     <description>A powerful world management utility plugin for Minecraft servers</description>
-    <url>https://xp.farm</url>
+    <url>https://xpfarm.org</url>
 
     <properties>
         <maven.compiler.release>25</maven.compiler.release>

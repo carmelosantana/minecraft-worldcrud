@@ -159,7 +159,7 @@ The plugin uses two main permissions:
 ## Support
 
 For support, bug reports, or feature requests:
-- Visit: https://xp.farm
+- Visit: https://xpfarm.org
 - Author: Carmelo Santana
 
 ## License
