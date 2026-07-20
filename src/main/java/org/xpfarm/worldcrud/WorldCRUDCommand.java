@@ -209,13 +209,13 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
             }
             
             String targetPlayerName = args[2];
-            Player targetPlayer = Bukkit.getPlayer(targetPlayerName);
-            
+            Player targetPlayer = PlayerLookup.resolveAllowingPartial(targetPlayerName).orElse(null);
+
             if (targetPlayer == null) {
-                plugin.sendMessage(sender, "Player not found: " + targetPlayerName, NamedTextColor.RED);
+                plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(targetPlayerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
                 return true;
             }
-            
+
             if (worldManager.teleportToWorld(targetPlayer, worldName)) {
                 plugin.sendMessage(sender, "Successfully teleported " + targetPlayer.getName() + " to world: " + worldName, NamedTextColor.GREEN);
                 plugin.sendMessage(targetPlayer, "You have been teleported to world: " + worldName, NamedTextColor.GREEN);
@@ -328,13 +328,13 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
         // If player specified, set difficulty for that player's world
         if (args.length >= 3) {
             String targetPlayerName = args[2];
-            Player targetPlayer = Bukkit.getPlayer(targetPlayerName);
-            
+            Player targetPlayer = PlayerLookup.resolveAllowingPartial(targetPlayerName).orElse(null);
+
             if (targetPlayer == null) {
-                plugin.sendMessage(sender, "Player not found: " + targetPlayerName, NamedTextColor.RED);
+                plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(targetPlayerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
                 return true;
             }
-            
+
             World playerWorld = targetPlayer.getWorld();
             playerWorld.setDifficulty(difficulty);
             
@@ -789,13 +789,13 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
         
         String playerName = args[1];
         String permission = args[2];
-        Player target = Bukkit.getPlayer(playerName);
-        
+        Player target = PlayerLookup.resolveAllowingPartial(playerName).orElse(null);
+
         if (target == null) {
-            plugin.sendMessage(sender, "Player not found: " + playerName, NamedTextColor.RED);
+            plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(playerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
             return true;
         }
-        
+
         permissionHandler.addPermission(target, permission);
         plugin.sendMessage(sender, "Added permission " + permission + " to " + playerName, NamedTextColor.GREEN);
         return true;
@@ -814,13 +814,13 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
         
         String playerName = args[1];
         String permission = args[2];
-        Player target = Bukkit.getPlayer(playerName);
-        
+        Player target = PlayerLookup.resolveAllowingPartial(playerName).orElse(null);
+
         if (target == null) {
-            plugin.sendMessage(sender, "Player not found: " + playerName, NamedTextColor.RED);
+            plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(playerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
             return true;
         }
-        
+
         permissionHandler.removePermission(target, permission);
         plugin.sendMessage(sender, "Removed permission " + permission + " from " + playerName, NamedTextColor.GREEN);
         return true;
@@ -838,13 +838,13 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
         }
         
         String playerName = args[1];
-        Player target = Bukkit.getPlayer(playerName);
-        
+        Player target = PlayerLookup.resolveAllowingPartial(playerName).orElse(null);
+
         if (target == null) {
-            plugin.sendMessage(sender, "Player not found: " + playerName, NamedTextColor.RED);
+            plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(playerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
             return true;
         }
-        
+
         Set<String> permissions = permissionHandler.getPlayerPermissions(target);
         sender.sendMessage(Component.text("=== Permissions for " + playerName + " ===", NamedTextColor.GOLD));
         if (permissions.isEmpty()) {
@@ -1030,7 +1030,7 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
                 }
                 
                 String playerName = args[2];
-                Player targetPlayer = Bukkit.getPlayer(playerName);
+                Player targetPlayer = PlayerLookup.resolveAllowingPartial(playerName).orElse(null);
                 
                 if (targetPlayer != null) {
                     String lastWorld = playerDataManager.getLastWorld(targetPlayer);
@@ -1043,7 +1043,7 @@ public class WorldCRUDCommand implements CommandExecutor, TabCompleter {
                     plugin.sendMessage(sender, "Sticky Logout: " + (stickyEnabled ? "Enabled" : "Disabled"), 
                                      stickyEnabled ? NamedTextColor.GREEN : NamedTextColor.RED);
                 } else {
-                    plugin.sendMessage(sender, "Player not found: " + playerName, NamedTextColor.RED);
+                    plugin.sendMessage(sender, PlayerLookup.noSuchPlayerMessage(playerName, PlayerLookup.onlineNames()), NamedTextColor.RED);
                 }
                 break;
                 
