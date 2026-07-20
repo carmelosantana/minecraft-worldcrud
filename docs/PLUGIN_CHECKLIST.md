@@ -174,15 +174,15 @@ Out-of-band and not a prerequisite for this patch: no updater manifest entry and
 ## 8. CI/CD
 
 - [x] Standard plugin Actions workflow is installed. Present in `.github/` from prior releases.
-- [ ] Successful main Actions run is recorded before tagging. **Not performed** — nothing pushed or tagged.
+- [x] Successful main Actions run is recorded before tagging. `fix/floodgate-name-resolution` was merged fast-forward to `main` and pushed on 2026-07-20. The `main`-branch Actions run for commit `a14832c` completed with conclusion `success` **before** tag `v1.1.2` was created. No tag was pushed against a red or in-flight run.
 - [ ] Workflow permissions reviewed against the documented contract. Not re-reviewed in this change.
 
-## 9. Release — NOT DONE
+## 9. Release — `v1.1.2` COMPLETE
 
-- [x] Semantic version matches the POM. `pom.xml` bumped `1.1.1` → `1.1.2`; `plugin.yml` uses the filtered `${project.version}`.
-- [ ] Successful tag Actions run and GitHub release recorded. **Not performed** — no tag, no push, no release, by instruction.
-- [ ] Release contains exactly one updater-matching JAR plus `SHA256SUMS.txt`.
-- [ ] Downloaded release assets pass `sha256sum --check`.
+- [x] Semantic version matches the POM, plugin metadata, and `v<version>` tag. Verified: `pom.xml` `<version>` `1.1.2` equals tag `v1.1.2` equals the `plugin.yml` version read out of the built JAR.
+- [x] Successful tag Actions run and GitHub release recorded. Annotated tag `v1.1.2` created on verified commit `a14832c` and pushed; the tag Actions run completed with conclusion `success`. GitHub release published 2026-07-20 14:47:52 UTC with `draft=false`, `prerelease=false`, and it is now the repository's Latest release.
+- [x] Release contains exactly one updater-matching JAR plus `SHA256SUMS.txt`. Verified by downloading the published release assets: exactly one JAR matching the updater asset pattern, plus `SHA256SUMS.txt`, and no `original-*` JAR.
+- [x] Downloaded release assets pass `sha256sum --check`. Reported `OK` for the JAR.
 
 ## 10. Updater
 
@@ -191,11 +191,15 @@ Out-of-band and not a prerequisite for this patch: no updater manifest entry and
 - [ ] Updater dry-run uses a disposable directory. Not run.
 - [ ] Failure retains the installed JAR and fail-open behavior. Not run.
 
+Updater enrollment work was **not performed in this pass** (`v1.1.2` release only).
+
 ## 11. Deployment
 
 - [ ] Dokploy redeployment notes identify the full recreation used to rerun the one-shot updater. Not performed.
 - [ ] Updater completion, Minecraft startup, destination JAR, and logs inspected. Not performed.
 - [ ] No production plugin hot reload was used. No deployment occurred.
+
+**Not performed.** The operator will deploy and verify live on `play.xpfarm.org` via the dev server with helpers.
 
 **Rollback:** this patch changes only name resolution at six command call sites and adds one new
 class. Reverting the commit restores `1.1.1` behaviour exactly; there is no migration, no persisted
