@@ -97,7 +97,19 @@ sources is a separate change and was not done.
 
 - [x] Unit tests cover separable logic and failure paths where applicable. 8 tests added in `PlayerLookupTest` covering candidate ordering, the already-prefixed case, trimming, null/blank, and both failure-message forms. Written failing first: with the helper absent the build failed to compile with `cannot find symbol: variable PlayerLookup` at 11 sites.
 - [x] `mvn --batch-mode --no-transfer-progress clean verify` succeeds. `Tests run: 10, Failures: 0, Errors: 0, Skipped: 0` / `BUILD SUCCESS`. Both `PlayerLookupTest` (8) and the pre-existing `WorldTypesTest` (2) confirmed executing in `target/surefire-reports/`.
-- [ ] The releasable JAR and embedded `plugin.yml` were inspected; `original-*` JARs are excluded. **Not performed.** Note that `maven-shade-plugin` is active and does produce `target/original-worldcrud-1.1.2.jar` alongside the real JAR — whether release tooling filters it was not checked in this change.
+- [x] The releasable JAR and embedded `plugin.yml` were inspected; `original-*` JARs are excluded. Verified by unzipping the built JAR. Embedded `plugin.yml` reads `version: '1.1.2'`, `api-version: '1.21'`, `main: org.xpfarm.worldcrud.WorldCRUDPlugin`. Bytecode major version of the first `.class` entry is **69 (Java 25)**, matching the ecosystem standard.
+
+      **Exclusion is at the CI release-asset step, not at build time.** `target/` contains both
+      `worldcrud-1.1.2.jar` and `original-worldcrud-1.1.2.jar` — the `original-*` JAR *is* still
+      produced locally. It is excluded from released assets by `.github/workflows/build.yml`, which
+      filters `! -name 'original-*'` on both the SHA256SUMS step and the `gh release upload` step
+      (and excludes `!target/original-*.jar` from the uploaded build artifact). So no `original-*`
+      JAR can reach a release, but one does exist on disk after a local build.
+
+      `maven-shade-plugin` is a **no-op** here: every dependency is `provided`/`test` scope, so it
+      shades nothing and exists only to rename the untouched jar, which is what creates the
+      `original-*` file. `agua-de-florida` resolved this by removing shading entirely; doing the
+      same here is out of scope for this change.
 
 **Surefire:** no `maven-surefire-plugin` declaration was needed. Maven 3.9.16's default surefire
 (3.5.4) auto-detects `JUnitPlatformProvider` and runs Jupiter tests here; this was verified by name
